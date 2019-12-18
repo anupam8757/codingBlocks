@@ -1,0 +1,37 @@
+//FIND AN ELEMENT IN ROTATED AND SORTED ARRAY
+#include <iostream>
+using namespace std;
+int elementsearch(int a[],int s,int en,int key)
+{
+    if(s>en)
+    return (-1);
+    int mid=(s+en)/2;
+    if(a[s]==a[mid])
+    return mid;
+    // if mid lies in 1st line
+    if(a[s]<=a[mid])
+       {
+           if(key>=a[s]&& key<=a[mid])
+           {
+               return(elementsearch(a,s,mid-1,key));
+           }
+           else
+           return(elementsearch(a,mid+1,en,key));
+       }
+ // if mid lies in 2nd line
+ if(key>=a[mid] && key<=a[en])
+  return(elementsearch(a,mid+1,en,key));
+  return elementsearch(a,s,mid-1,key);
+}
+int main() {
+    int a[100],key,n;
+    cout<<"enter size of arrray then array \n";
+    cin>>n;
+    for(int i=0;i<n;i++)
+    cin>>a[i];
+    cout<<"enter key";
+    cin>>key;
+
+    cout<<"element found at index  "<<elementsearch(a,0,n-1,key);
+
+}
