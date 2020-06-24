@@ -1,0 +1,61 @@
+/*You are packing for a vacation on the sea side and you are going to carry only one bag with capacity S (1 <= S <= 1000). You also have N (1<= N <= 1000) items that you might want to take with you to the sea side. Unfortunately you can not fit all of them in the knapsack so you will have to choose. For each item you are given its size and its value. You want to maximize the total value of all the items you are going to bring. What is this maximum total value?
+
+Input Format
+On the first line you are given N and S.
+Second line contains N space separated integer where ith integer denotes the size of ith item. Third line contains N space seperated integers where ith integer denotes the value of ith item.
+
+Constraints
+1 <= S,N <= 1000
+
+Output Format
+Output a single integer showing the maximum value that can be obtained by optimally choosing the items.
+
+Sample Input
+5 4
+1 2 3 2 2 
+8 4 0 5 3
+Sample Output
+13
+Explanation
+Total capacity = 4.
+Pick size 1 with value 8 and size 2 with value 5.*/
+#include<iostream>
+using namespace std;
+// Returns the maximum value that 
+// can be put in a knapsack of capacity W 
+int knapSack(int W, int wt[], int val[], int n) 
+{ 
+    int i, w; 
+    int K[n + 1][W + 1]; 
+  
+    // Build table K[][] in bottom up manner 
+    for (i = 0; i <= n; i++) { 
+        for (w = 0; w <= W; w++) { 
+            if (i == 0 || w == 0) 
+                K[i][w] = 0; 
+            else if (wt[i - 1] <= w) 
+                K[i][w] = max( 
+                    val[i - 1] + K[i - 1][w - wt[i - 1]], 
+                    K[i - 1][w]); 
+            else
+                K[i][w] = K[i - 1][w]; 
+        } 
+    } 
+  
+    return K[n][W]; 
+} 
+int main() {
+	int no,capacity;
+	cin>>no>>capacity;
+	int size[10000],value[10000];
+	for(int i=0;i<no;i++)
+	{
+		cin>>size[i];
+	}
+	for(int i=0;i<no;i++)
+	{
+		cin>>value[i];
+	}
+	cout<<knapSack(capacity,size,value,no);
+	return 0;
+}
