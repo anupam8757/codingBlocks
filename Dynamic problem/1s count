@@ -1,0 +1,65 @@
+/*
+Given an array of size n with 0s and 1s , flip at most k 0s to get the longest possible subarray of 1s.
+
+Input Format
+First Line : n, size of array and k Second Line : n space separated numbers (0s or 1s)
+
+Constraints
+n <= 10^5 0 <= k <= n
+
+Output Format
+First Line : Size of subarray Second Line : Array after flipping k 0s
+
+Sample Input
+10 2
+1 0 0 1 0 1 0 1 0 1
+Sample Output
+5
+1 0 0 1 1 1 1 1 0 1*/
+#include<iostream>
+using namespace std;
+int count(int n,int *arr,int k)
+{
+	int max_length=0,l=0,r=0,zero_count=0,bestl=0,cur_length=0;
+	while(r<n)
+	{
+		if(arr[r]==0)
+        {
+		zero_count++;
+		while(zero_count>k)
+		{
+			if(arr[l]==0)
+			zero_count--;
+			l++;
+		}
+        }
+        cur_length=r-l+1;
+	    if(cur_length>max_length)
+        {
+        bestl=l;
+        max_length=cur_length;
+        }
+		r++;
+
+	}
+	for(int i=bestl;i<bestl+max_length;i++)
+	{
+		if(arr[i]==0)
+		arr[i]=1;
+	}
+	return max_length;
+
+}
+int main() {
+	int n,k;
+	int arr[100000];
+	cin>>n>>k;
+	for(int i=0;i<n;i++)
+	{
+		cin>>arr[i];
+	}
+	cout<<count(n,arr,k)<<endl;
+    for(int i=0;i<n;i++)
+	cout<<arr[i]<<" ";
+	return 0;
+}
